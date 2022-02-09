@@ -28,11 +28,17 @@ SOFTWARE.
 
 *** OPTIONS ***/
 
+	//EDIT U URL
+	$You_URL = "http://xxxxxx/xxxx/NAS_UPLOAD/";
+
+	//COPY LINK BTT (Yes or No)
+	$Copy_link = "Yes";
+
 	// TITLE OF PAGE
-	$title = "List of Files";
+	$title = "รายการไฟล์ทั้งหมดใน NAS";
 	
 	// STYLING (light or dark)
-	$color	= "light";
+	$color	= "dark";
 	
 	// ADD SPECIFIC FILES YOU WANT TO IGNORE HERE
 	$ignore_file_list = array( ".htaccess", "Thumbs.db", ".DS_Store", "index.php" );
@@ -41,7 +47,7 @@ SOFTWARE.
 	$ignore_ext_list = array( );
 	
 	// SORT BY
-	$sort_by = "name_asc"; // options: name_asc, name_desc, date_asc, date_desc
+	$sort_by = "date_asc"; // options: name_asc, name_desc, date_asc, date_desc
 	
 	// ICON URL
 	//$icon_url = "https://www.dropbox.com/s/lzxi5abx2gaj84q/flat.png?dl=0"; // DIRECT LINK
@@ -67,11 +73,15 @@ if( !$title ) { $title = clean_title(basename(dirname(__FILE__))); }
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0, viewport-fit=cover">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+	<script src="https://rawcdn.githack.com/zenorocha/clipboard.js/v2.0.10/dist/clipboard.min.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 	<link href="//fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css" />
 	<style>
 		*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 		body { background: #dadada; font-family: "Lato", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: 400; font-size: 14px; line-height: 18px; padding: 0; margin: 0; text-align: center;}
-		.wrap { max-width: 100%; width: 500px; margin: 20px auto; background: white; padding: 40px; border-radius: 3px; text-align: left;}
+		.wrap { max-width: 100%; width: 500px; margin: 20px auto; background: white; padding: 40px; border-radius: 44px; text-align: left;}
 		@media only screen and (max-width: 700px) { .wrap { padding: 15px; } }
 		h1 { text-align: center; margin: 40px 0; font-size: 22px; font-weight: bold; color: #666; }
 		a { color: #399ae5; text-decoration: none; } a:hover { color: #206ba4; text-decoration: none; }
@@ -118,10 +128,34 @@ if( !$title ) { $title = clean_title(basename(dirname(__FILE__))); }
 		body.dark .note { color: #fff; }
 		body.dark .block .data { color: #fff; }
 		body.dark .sub { border-left: solid 5px #0e0e0e; }
+
+
+		body.dark.light { background: #dadada; color: #fff; }
+		body.dark.light h1 { color: #666; }
+		body.dark.light .wrap { background: #fff; }
+		body.dark.light .block { border-top: solid 1px #666; }
+		body.dark.light .block a:hover, body.dark .block a.open { background: #000; }
+		body.dark.light .note { color: #fff; }
+		body.dark.light .block .data { color: #666; }
+		body.dark.light .sub { border-left: solid 5px #0e0e0e; }
 	</style>
 </head>
 <body class="<?php echo $color; ?>">
+
 <h1><?php echo $title ?></h1>
+<!-- // real body -->
+<div class="form-check form-switch">
+  <input class="form-check-input" style="
+    position: absolute;
+	transform: scale(1.7);
+" type="checkbox" onclick="myFunction()" id="flexSwitchCheckChecked" checked>
+  <label class="form-check-label" style="
+    font-size: 22px;
+" for="flexSwitchCheckChecked">โหมดมืด</label>
+</div>
+
+
+
 <div class="wrap">
 <?php
 
@@ -171,7 +205,7 @@ function get_directory_size($path)
 // SHOW THE MEDIA BLOCK
 function display_block( $file )
 {
-	global $ignore_file_list, $ignore_ext_list, $force_download;
+	global $ignore_file_list, $ignore_ext_list, $force_download,$You_URL,$Copy_link;
 	
 	$file_ext = ext($file);
 	if( !$file_ext AND is_dir($file)) $file_ext = "dir";
@@ -184,7 +218,7 @@ function display_block( $file )
 	$rtn .= "<a href=\"$file\" class=\"$file_ext\"{$download_att}>";
 	$rtn .= "	<div class=\"img $file_ext\"></div>";
 	$rtn .= "	<div class=\"name\">";
-	
+	$file_add = $You_URL . basename($file);
 	if ($file_ext === "dir") 
 	{
 		$rtn .= "		<div class=\"file fs-1-2 bold\">" . basename($file) . "</div>";
@@ -201,10 +235,20 @@ function display_block( $file )
 
 	$rtn .= "	</div>";
 	$rtn .= "	</a>";
+	
+	// NEW CODE KORN
+	//$rtn .= '<a ';
+	if ($Copy_link == "Yes") {
+		$rtn .= '<button class="btn btn-outline-info"  style="float: right; " data-clipboard-text="'.$file_add.'">
+		คัดลอก URL
+   		</button>';
+	};
+
+	//$rtn .=	'</a>';
+	//$rtn .= $file_add;
 	$rtn .= "</div>";
 	return $rtn;
 }
-
 
 // RECURSIVE FUNCTION TO BUILD THE BLOCKS
 function build_blocks( $items, $folder )
@@ -301,8 +345,8 @@ function build_blocks( $items, $folder )
 }
 
 // GET THE BLOCKS STARTED, FALSE TO INDICATE MAIN FOLDER
-$items = scandir( dirname(__FILE__) );
-build_blocks( $items, false );
+$items = scandir( dirname(__FILE__) . '/NAS_UPLOAD/' );
+build_blocks( $items, FALSE );
 ?>
 
 <?php if($toggle_sub_folders) { ?>
@@ -317,8 +361,53 @@ build_blocks( $items, false );
 		});
 	});
 </script>
+
+
+    <script>
+      var clipboard = new ClipboardJS('.btn');
+
+      clipboard.on('success', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+		toastMixin.fire({
+  			title: 'คัดลอกเรียบร้อยแล้ว!',
+
+  			timer: 1500
+})
+      });
+
+      clipboard.on('error', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+
+
+	  var toastMixin = Swal.mixin({
+    toast: true,
+    icon: 'success',
+    title: 'General Title',
+    position: 'top-right',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  });
+    </script>
+
+<script>
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("light");
+}
+</script>
+
 <?php } ?>
 </div>
-<div style="padding: 10px 10px 40px 10px;"><a href="https://halgatewood.com/free/file-directory-list/">Free PHP File Directory Script</a> (<a href="https://github.com/halgatewood/file-directory-list/">GitHub</a>)</div>
+<div style="padding: 10px 10px 40px 10px;"><a href="https://www.facebook.com/adminkornthai/">ติดต่อผู้พัฒนา</a> (<a href="https://www.facebook.com/adminkornthai/">Facebook</a>)</div>
 </body>
 </html>
