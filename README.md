@@ -1,6 +1,6 @@
-![Screenshot](Screenshot.jpg)
-
 # Free Super Clean PHP File Directory Listing Script
+
+![Screenshot](Screenshot.jpg)
 
 Easily display files and folders in a mobile friendly, clean and cool way. Just drop the `index.php` in your folder and you are ready to go. Past versions of this script can be found here: https://halgatewood.com/free/file-directory-list/
 
