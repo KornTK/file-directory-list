@@ -1,4 +1,4 @@
-![Screenshot](screenshot.jpg)
+![Screenshot](Screenshot.jpg)
 
 # Free Super Clean PHP File Directory Listing Script
 
