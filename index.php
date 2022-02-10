@@ -77,6 +77,10 @@ if( !$title ) { $title = clean_title(basename(dirname(__FILE__))); }
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+	<!-- off_line_dee -->
+	<link rel="stylesheet" href="style.css">
+  	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+	
 	<link href="//fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css" />
 	<style>
 		*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
@@ -140,10 +144,27 @@ if( !$title ) { $title = clean_title(basename(dirname(__FILE__))); }
 		body.dark.light .sub { border-left: solid 5px #0e0e0e; }
 	</style>
 </head>
+
 <body class="<?php echo $color; ?>">
 
 <h1><?php echo $title ?></h1>
 <!-- // real body -->
+<div class="wrapper">
+    <div class="toast">
+      <div class="content">
+        <div class="icon"><i class="uil uil-wifi"></i></div>
+        <div class="details">
+          <span>เชื่อมต่อกับเซิฟเวอร์สําเร็จ!</span>
+          <p>เชื่อมต่อกับเซิฟเวอร์สําเร็จ!.</p>
+        </div>
+      </div>
+      <div class="close-icon"><i class="uil uil-times"></i></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
+
 <div class="form-check form-switch">
   <input class="form-check-input" style="
     position: absolute;
