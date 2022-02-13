@@ -29,7 +29,7 @@ SOFTWARE.
 *** OPTIONS ***/
 
 	//EDIT U URL
-	$You_URL = "http://xxxxxx/xxxx/NAS_UPLOAD/";
+	$You_URL = "http://XXXXXXXX.XXX/NAS_UPLOAD/";
 
 	//COPY LINK BTT (Yes or No)
 	$Copy_link = "Yes";
@@ -76,11 +76,14 @@ if( !$title ) { $title = clean_title(basename(dirname(__FILE__))); }
 	<script src="https://rawcdn.githack.com/zenorocha/clipboard.js/v2.0.10/dist/clipboard.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+	
 	<!-- off_line_dee -->
 	<link rel="stylesheet" href="style.css">
-  	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
 	
+	
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
+
 	<link href="//fonts.googleapis.com/css?family=Lato:400,900" rel="stylesheet" type="text/css" />
 	<style>
 		*, *:before, *:after { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
@@ -260,8 +263,8 @@ function display_block( $file )
 	// NEW CODE KORN
 	//$rtn .= '<a ';
 	if ($Copy_link == "Yes") {
-		$rtn .= '<button class="btn btn-outline-info"  style="float: right; " data-clipboard-text="'.$file_add.'">
-		คัดลอก URL
+		$rtn .= '<button class="btn btn-outline-info " style="float: right; " data-clipboard-text="'.$file_add.'">
+		<span class="mdi mdi-content-paste"></span>คัดลอก URL
    		</button>';
 	};
 
@@ -425,10 +428,26 @@ function myFunction() {
    var element = document.body;
    element.classList.toggle("light");
 }
-</script>
 
+// Detect offline/online mode in simple way.
+// window.addEventListener('online',  updateOnlineStatus);
+// window.addEventListener('offline', updateOnlineStatus);
+
+// function updateOnlineStatus(event) {
+// 		if(navigator.online) {
+			
+// 		}else {
+// 			con 
+// }
+			
+// }
+</script>
 <?php } ?>
 </div>
+<button type="submit" class="btn btn-primary"disabled>
+  <span class="mdi mdi-account-key"></span> เข้าโหมดผู้ดูแล
+</button>
+<button type="button" onclick="location.href='http://system.korntk.tk:3232/NAS/NAS_UPLOAD/player.html'" class="btn btn-outline-success "><span class="mdi mdi-movie"></span>เข้าโหมดดูวิดีโอ</button>
 <div style="padding: 10px 10px 40px 10px;"><a href="https://www.facebook.com/adminkornthai/">ติดต่อผู้พัฒนา</a> (<a href="https://www.facebook.com/adminkornthai/">Facebook</a>)</div>
 </body>
 </html>
